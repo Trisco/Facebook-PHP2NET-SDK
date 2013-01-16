@@ -1,0 +1,131 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+body
+{
+    background: #b6b7bc;
+    font-family: Lucida Grande,Tahoma,Arial,Verdana,sans-serif;
+    font-size: small;
+    margin: 0px;
+    padding: 0px;
+    color: #696969;
+}
+
+a:link, a:visited{    color: #034af3;}
+a:hover{    color: #1d60ff;    text-decoration: none;}
+a:active{    color: #034af3;}
+p{    margin-bottom: 10px;    line-height: 1.6em;}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6{    font-size: 1.5em;    color: #666666;    font-variant: small-caps;    text-transform: none;    font-weight: 200;    margin-bottom: 0px;}
+h1{    font-size: 1.6em;    padding-bottom: 0px;    margin-bottom: 0px;}
+h2{    font-size: 1.5em;    font-weight: 600;margin-bottom: 6px; }
+h3{    font-size: 1.2em;}
+h4{    font-size: 1.1em;}
+h5, h6{    font-size: 1em;margin-bottom:3px;}
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2{    margin-top: 0px;}
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+.page{    width: 960px;    background-color: #fff;    margin: 20px auto 0px auto;    border: 1px solid #496077;}
+.header{    position: relative;    margin: 0px;    padding: 0px;    background: #4b6c9e;    width: 100%;}
+.header h1{    font-weight: 700;    margin: 0px;    padding: 0px 0px 0px 20px;    color: #f9f9f9;    border: none;    line-height: 2em;    font-size: 2em;}
+.main{    padding: 0px 12px;    margin: 12px 8px 8px 8px;    min-height: 420px;}
+.leftCol{    padding: 6px 0px;    margin: 12px 8px 8px 8px;    width: 200px;    min-height: 200px;}
+.footer{    color: #4e5766;    padding: 8px 0px 0px 0px;    margin: 0px auto;    text-align: center;    line-height: normal;}
+
+/* TAB MENU   
+----------------------------------------------------------*/
+div.hideSkiplink{    background-color: #3a4f63;    width: 100%;}
+div.menu{    padding: 4px 0px 4px 8px;}
+div.menu ul{    list-style: none;    margin: 0px;    padding: 0px;    width: auto;}
+div.menu ul li a, div.menu ul li a:visited{    background-color: #465c71;    border: 1px #4e667d solid;    color: #dde4ec;    display: block;    line-height: 1.35em;    padding: 4px 20px;    text-decoration: none;  white-space: nowrap;}
+div.menu ul li a:hover{    background-color: #bfcbd6;    color: #465c71;    text-decoration: none;}
+div.menu ul li a:active{    background-color: #465c71;    color: #cfdbe6;    text-decoration: none;}
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+fieldset{    margin: 1em 0px;    padding: 1em;    border: 1px solid #ccc;}
+fieldset p{    margin: 2px 12px 10px 10px;}
+fieldset.login label, fieldset.register label, fieldset.changePassword label{    display: block;}
+fieldset label.inline{    display: inline;}
+legend{    font-size: 1.1em;    font-weight: 600;    padding: 2px 4px 8px 4px;}
+input.textEntry{    width: 320px;    border: 1px solid #ccc;}
+input.passwordEntry{    width: 320px;    border: 1px solid #ccc;}
+div.accountInfo{    width: 42%;}
+form ul { font-size: 100%; list-style-type: none;}
+input.text { background: url("Images/shadow.gif") repeat-x scroll center top #FFFFFF;  border-color: #7C7C7C #C3C3C3 #DDDDDD;  border-style: solid;border-width: 1px; color: #333333;  font-size: 100%;  margin: 0;  padding: 2px 0;}
+form div .row label { clear: both; color: #444444; display: block; font-size: 9px; line-height: 9px; margin: 0; padding-top: 3px;}
+form div .row .rowsection {color: #444444; float: left;  margin: 0 4px 0 0; padding: 0 0 8px;}
+/* MISC  
+----------------------------------------------------------*/
+ul {  list-style-type: none;}
+.clear{    clear: both;}
+.title{    display: block;    float: left;    text-align: left;    width: auto;}
+.loginDisplay{    font-size: 1.1em;    display: block;    text-align: right;    padding: 10px;    color: White;}
+.loginDisplay a:link{    color: white;}
+.loginDisplay a:visited{    color: white;}
+.loginDisplay a:hover{    color: white;}
+.failureNotification{    font-size: 1.2em;    color: Red;}
+.bold{    font-weight: bold;}
+.submitButton{    text-align: right;    padding-right: 10px;}
+.hidden_elem {display: none !important;}
+
+.clearfix {display: block;zoom:1;}
+.clearfix:after{clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden}
+
+/*Generic layout*/
+.row{    width: 100%;  padding: 5px 5px 10px 5px; text-align: left; vertical-align:middle;}
+.row input{}
+.colLeft{    width: 30%;}
+.colRight{    width: 60%;}
+
+/* permissions popup */
+
+.uiGrid{border:0;border-collapse:collapse;border-spacing:0}
+.pop_container_advanced{background:rgba(82,82,82,0.7);border-radius:8px;padding:10px}
+.pop_content_old{position:relative}
+.pop_container{direction:ltr;position:relative;top:10px}
+.pop_topleft,.pop_topright,.pop_bottomleft,.pop_bottomright{height:10px;width:10px;overflow:hidden;position:absolute}
+.pop_topleft{background-image:url(https://s-static.ak.facebook.com/rsrc.php/v1/y-/r/gRZW3Vw75Um.png);background-repeat:no-repeat;background-position:-111px -162px;left:-10px;top:-10px}
+.pop_topright{background-image:url(https://s-static.ak.facebook.com/rsrc.php/v1/y-/r/gRZW3Vw75Um.png);background-repeat:no-repeat;background-position:-122px -162px;right:-10px;top:-10px}
+.pop_bottomleft{background-image:url(https://s-static.ak.facebook.com/rsrc.php/v1/y-/r/gRZW3Vw75Um.png);background-repeat:no-repeat;background-position:-89px -162px;bottom:-10px;left:-10px}
+.pop_bottomright{background-image:url(https://s-static.ak.facebook.com/rsrc.php/v1/y-/r/gRZW3Vw75Um.png);background-repeat:no-repeat;background-position:-100px -162px;right:-10px;bottom:-10px}
+.pop_verticalslab,.pop_horizontalslab{width:100%;height:100%;position:absolute;background:#525252;opacity:.7}
+.pop_verticalslab{margin:-10px 0 0;padding-bottom:20px}
+.pop_horizontalslab{margin:0 0 0 -10px;padding-right:20px}
+.generic_dialog{height:0;left:0;overflow:visible;outline:none;position:absolute;top:0;width:100%;z-index:200}
+.generic_dialog_fixed{position:fixed}
+.generic_dialog_fixed_overflow{background-color:rgba(252, 252, 252, .9);bottom:0;height:auto;left:0;overflow-x:auto;overflow-y:scroll;right:0;top:0;width:auto}
+.generic_dialog_fixed_overflow .generic_dialog_popup{height:auto;padding-bottom:40px}
+.generic_dialog_overflow_mode{overflow:hidden}
+.generic_dialog_popup{height:0;overflow:visible;position:relative;width:465px;margin:auto}
+.generic_dialog div.dialog_loading{background-color:#f2f2f2;border:1px solid #606060;font-size: 24px;padding:10px}
+.generic_dialog .overlay{background-color:#fff;height:100%;left:0;opacity:.8;position:fixed;top:0;width:100%}
+.pop_content{direction:ltr;outline:none}
+.pop_dialog_rtl .pop_content{direction:rtl}
+.pop_content h2.dialog_title{background:#6d84b4;border:1px solid #3b5998;border-bottom:none;color:#fff;font-size: 14px;font-weight:bold;margin:0}
+.pop_content h2.secure{background:#6d84b4 url(https://s-static.ak.facebook.com/rsrc.php/v1/yu/r/jp8TzrZb6J1.png) 98% no-repeat}
+.pop_content h2.loading{background:#6d84b4 url(https://s-static.ak.facebook.com/rsrc.php/v1/y-/r/AGUNXgX_Wx3.gif) 98% no-repeat}
+.pop_content h2.dialog_loading{background:#6d84b4 url(https://s-static.ak.facebook.com/rsrc.php/v1/y-/r/AGUNXgX_Wx3.gif) no-repeat 400px 10px;padding-right:40px}
+.pop_content h2 span{display:block;padding:5px 10px}
+.pop_content .dialog_content{background:#fff;border:1px solid #555;border-top-width:0}
+.pop_content .dialog_content.dialog_content_titleless{border-top:1px solid #555}
+.pop_content .dialog_loading,.dialog_loading_shown .dialog_title,.dialog_loading_shown .dialog_content{display:none}
+.dialog_loading_shown .dialog_loading{display:block}
+.pop_content .dialog_body{padding:10px;border-bottom:1px solid #ccc}
+.omitDialogFooter .pop_content .dialog_body{border-bottom:0}
+.pop_content .dialog_summary{background:#f2f2f2;padding:8px 10px;border-bottom:1px solid #ccc}
+.pop_content .dialog_buttons{background:#f2f2f2;padding:8px 10px 8px 10px;position:relative;text-align:right}
+.pop_content .dialog_buttons_msg{float:left;line-height:17px;padding-top:4px}
+.pop_content .dialog_footer{background:#F2F2F2 none repeat scroll 0}
+.uiListHorizontalItemBorder { border-width: 0 0 0 1px;}
+.uiListHorizontalItem { float: left;}
+.uiListItem { display: block;}
+.uiPillButton, a.uiPillButton:hover, a.uiPillButton:visited {   display: inline-block;   font-size: 11px;   font-weight: bold;   line-height: 15px;   padding: 1px 6px 2px; color: #3B5998;  cursor: pointer;text-decoration: none;}
+.uiPillButtonSelected {    background-color: #6D84B4;    border: 1px solid #3B5998;    border-radius: 2px 2px 2px 2px;    color: #FFFFFF;     line-height: 15px; cursor: default;  }
