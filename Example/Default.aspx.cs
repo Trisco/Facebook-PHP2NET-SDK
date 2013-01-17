@@ -20,8 +20,8 @@ public partial class _Default : System.Web.UI.Page
     {
         FacebookConfig fbConfig = new FacebookConfig() 
         { 
-            appId = "160789593985275", 
-            apiSecret = "b4cb207732c89f34c94f8d259df07b8c" 
+            appId = "160789593985275",
+            apiSecret = "<secret>" 
         };
         //for local debugging and custom persistent store - force domain - should allow cross-domain authentication using a single FB app
         fbConfig.appDomain = "fbAsp.hylas.be";
