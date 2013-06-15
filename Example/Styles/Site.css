@@ -84,6 +84,7 @@ ul {  list-style-type: none;}
 .row input{}
 .colLeft{    width: 30%;}
 .colRight{    width: 60%;}
+.error { color: Red; font-weight:600;}
 
 /* permissions popup */
 
@@ -129,3 +130,4 @@ ul {  list-style-type: none;}
 .uiListItem { display: block;}
 .uiPillButton, a.uiPillButton:hover, a.uiPillButton:visited {   display: inline-block;   font-size: 11px;   font-weight: bold;   line-height: 15px;   padding: 1px 6px 2px; color: #3B5998;  cursor: pointer;text-decoration: none;}
 .uiPillButtonSelected {    background-color: #6D84B4;    border: 1px solid #3B5998;    border-radius: 2px 2px 2px 2px;    color: #FFFFFF;     line-height: 15px; cursor: default;  }
+

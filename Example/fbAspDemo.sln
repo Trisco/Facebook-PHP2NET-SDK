@@ -18,7 +18,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Example", ".", "{1487E570-2
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "16335"
+		VWDPort = "28213"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "facebook-asp-sdk", "..\FB_ASP_SDK\facebook-asp-sdk.csproj", "{97B5D0B9-44AD-4FED-98E3-5F2707FBB7F1}"

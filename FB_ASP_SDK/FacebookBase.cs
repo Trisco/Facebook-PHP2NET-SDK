@@ -499,6 +499,10 @@ namespace facebook
                 if (signed_request.ContainsKey("user_id"))
                 {
                     user = signed_request["user_id"].ToString();
+                    if (!user.Equals(this.getPersistentData("user_id")))
+                    {
+                        this.clearAllPersistentData();
+                    }
                     setPersistentData("user_id", signed_request["user_id"].ToString());
                     return user;
                 }
@@ -870,6 +874,12 @@ namespace facebook
             this._jsonresult = json;
 
             // results are returned, errors are thrown
+            /*
+     if (is_array($result) && isset($result['error'])) {
+      $this->throwAPIException($result);
+      // @codeCoverageIgnoreStart
+    }
+             * */
             if (result == null)
                 this.throwAPIException(result);
 
@@ -951,7 +961,30 @@ namespace facebook
             if (!parameters.ContainsKey("access_token"))
                 parameters.Add("access_token", this.getAccessToken());
 
+            if (!parameters.ContainsKey("access_token"))
+                parameters.Add("appsecret_proof", this.getAppSecretProof(parameters["access_token"]));
+
+            // json_encode all params values that are not strings
+            /*    foreach ($params as $key => $value) {
+                  if (!is_string($value)) {
+                    $params[$key] = json_encode($value);
+                  }
+                }
+            */
             return this.makeRequest(url, parameters);
+        }
+
+        /**
+        * Generate a proof of App Secret
+        * This is required for all API calls originating from a server
+        * It is a sha256 hash of the access_token made using the app secret
+        *
+        * @param string $access_token The access_token to be hashed (required)
+        *
+        * @return string The sha256 hash of the access_token
+        */
+        protected String getAppSecretProof(String access_token) {
+            return Encryption.hash_hmac_sha256(access_token, this.getApiSecret()); ;
         }
 
         /**
@@ -1028,34 +1061,71 @@ namespace facebook
                     {
                         return null;
                     }
-
                 }
                 else if (parameters.Count > 0)
                 {
                     request.ContentType = "application/x-www-form-urlencoded";
                     postData = Encoding.UTF8.GetBytes(Http.http_build_query(parameters));
                     request.ContentLength = postData.Length;
-                    using (var dataStream = request.GetRequestStream())
+                    //using (var dataStream = request.GetRequestStream())
+                    using (StreamWriter requestWriter = new StreamWriter(request.GetRequestStream()))
                     {
-                        dataStream.Write(postData, 0, postData.Length);
+                        //dataStream.Write(postData, 0, postData.Length);
+                        requestWriter.Write(Http.http_build_query(parameters));
+                        requestWriter.Close();
                     }
                 }
             }
 
-            WebResponse resp;
+            //WebResponse resp;
+            HttpWebResponse resp;
+            StreamReader sr; String responseData;
             try
             {
-                resp = request.GetResponse();
+                resp = (HttpWebResponse)request.GetResponse();
             }
-            catch (WebException ex)
+            catch (WebException webException)
             {
-                //not found returns 404
-                //if (ex.Status == WebExceptionStatus.ProtocolError)
-                return null;
+                //transform to FacebookException
+                FacebookApiException e;
+                //set deafult for unknown error
+                String error = "{\"error_code\": " + webException.Status.ToString() + ",\"error\": { \"message\": " + webException.Message + ",\"type\": \"WebRequestException\",\"code\": \"WebRequestException\"}}";
+                if (webException.Response != null)
+                {
+                    sr = new StreamReader(webException.Response.GetResponseStream());
+                    responseData = sr.ReadToEnd();
+                    if (!string.IsNullOrEmpty(responseData))    
+                        error = responseData;
+                }
+                e = new FacebookApiException(this.json_decode(error));
+                //optional for further handling...
+                if (webException.Status == WebExceptionStatus.ProtocolError)
+                {     
+                    switch (((HttpWebResponse)webException.Response).StatusCode)
+                    {
+                        case HttpStatusCode.NotFound:
+                            throw e;
+                        case HttpStatusCode.Unauthorized:
+                            throw e;
+                        case HttpStatusCode.BadRequest:
+                            throw e;
+                        case HttpStatusCode.Forbidden:
+                            throw e;
+                        case HttpStatusCode.InternalServerError:
+                            throw e;
+                        default: 
+                            throw e;
+                    } 
+                }
+                throw e; // FacebookApiException from webException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            StreamReader sr = new StreamReader(resp.GetResponseStream());
-            String responseData = sr.ReadToEnd();
+            sr = new StreamReader(resp.GetResponseStream());
+            responseData = sr.ReadToEnd();
             if (string.IsNullOrEmpty(responseData))
             {
                 return null;

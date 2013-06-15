@@ -20,7 +20,7 @@ public partial class _Default : System.Web.UI.Page
     {
         FacebookConfig fbConfig = new FacebookConfig() 
         { 
-            appId = "160789593985275",
+            appId = "160789593985275", 
             apiSecret = "<secret>" 
         };
         //for local debugging and custom persistent store - force domain - should allow cross-domain authentication using a single FB app
@@ -267,7 +267,7 @@ public partial class _Default : System.Web.UI.Page
     protected void btnCall_Click(object sender, EventArgs e)
     {
         fbr = null; //Make sure previous response is cleared           
-
+        this.clearError();
         if (!string.IsNullOrEmpty(user))        //User logged in
         {
             try

@@ -1,4 +1,0 @@
-F:\Projecten\Trisco\FBtrisco.NET\trunk\Example\bin\facebook.dll
-F:\Projecten\Trisco\FBtrisco.NET\trunk\Example\bin\facebook.pdb
-F:\Projecten\Trisco\FBtrisco.NET\trunk\FB_ASP_SDK\obj\Debug\facebook.dll
-F:\Projecten\Trisco\FBtrisco.NET\trunk\FB_ASP_SDK\obj\Debug\facebook.pdb
