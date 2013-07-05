@@ -24,7 +24,17 @@ public partial class _Default : System.Web.UI.Page
             apiSecret = "<secret>" 
         };
         //for local debugging and custom persistent store - force domain - should allow cross-domain authentication using a single FB app
-        fbConfig.appDomain = "fbAsp.hylas.be";
+		//copy your authtoken from your published app in your local app.
+//        fbConfig.appDomain = "fbAsp.hylas.be";
+/*
+note: for quick and easy debugging on localhost:
+1. create facebook app for local debugging:
+	- App Domains: localhost
+	- Sandbox Mode: enabled (only admins can use app)
+	- Website with Facebook Login: http://localhost:<VS debugger or IIS express port>/Example/
+2. it works! (after a minute or two...)
+3. but you should put appId & apiSecrit in your web.config, using a web.config transformation to switch between your debug & release application
+*/
         fb = new Facebook(fbConfig);
         this.initPermissions();
         pnlPermissions.Visible = false;
@@ -309,11 +319,11 @@ public partial class _Default : System.Web.UI.Page
         if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(txtAccessToken.Text)) //User logged in
         {
             Dictionary<string, string> paras = new Dictionary<string, string>();
-            paras.Add("next", "http://fbasp.hylas.be/?logout=1");
-            //Response.Redirect(fb.getLogoutUrl(paras));
-            //Fix 2013-01-16: accesstoken sometimes stays valid after loggin out of facebook :/
+            //paras.Add("next", "http://fbasp.hylas.be/?logout=1");
             fb.destroySession();
-            Response.Redirect(fb.getLogoutUrl(paras));
+            //logout of facebook => switch following two lines
+            //Response.Redirect(fb.getLogoutUrl(paras));
+            Response.Redirect(HttpContext.Current.Request.ApplicationPath);
         }
         else //User not logged in
         {

@@ -438,6 +438,7 @@ namespace facebook
                 }
 
                 // code was bogus, so everything based on it should be invalidated.
+                FacebookBase.errorLog("code was bogus (getAccessTokenFromCode returns null), so everything based on it should be invalidated", EventLogEntryType.Warning);                  
                 clearAllPersistentData();
                 return null;
             }
@@ -708,6 +709,7 @@ namespace facebook
                 else
                 {
                     //self::errorLog('CSRF state token does not match one provided.');
+                    FacebookBase.errorLog("CSRF state token does not match one provided", EventLogEntryType.Warning);  
                     return null;
                 }
             }
@@ -816,11 +818,17 @@ namespace facebook
             {
                 // most likely that user very recently revoked authorization.
                 // In any event, we don't have an access token, so say so.
-                return null;
+                FacebookBase.errorLog("getAccessTokenFromCode FacebookApiException - most likely that user very recently revoked authorization: " + e.Message, EventLogEntryType.Error);
+    //deviation from facebook PHP SDK: we throw this error instead of ignoring it.
+    //            return null;
+                throw e;
             }
 
             if (string.IsNullOrEmpty(access_token_response))
+            {
+                FacebookBase.errorLog("getAccessTokenFromCode - access_token_response IsNullOrEmpty");
                 return null;
+            }
             if (access_token_response.Substring(0, 1) == "?") access_token_response = access_token_response.Substring(1);
             string[] values = access_token_response.Split('&');
             foreach (string val in values)
@@ -831,6 +839,7 @@ namespace facebook
             }
             //if (!access_token_response.ContainsKey("oauth_token"))
             //if (!access_token_response.ContainsKey("access_token"))
+            FacebookBase.errorLog("getAccessTokenFromCode - access_token_response doesn't contain access_token: " + access_token_response);
             return null;
 
             //return access_token_response["access_token"].ToString();
@@ -961,7 +970,7 @@ namespace facebook
             if (!parameters.ContainsKey("access_token"))
                 parameters.Add("access_token", this.getAccessToken());
 
-            if (!parameters.ContainsKey("access_token"))
+            if (!parameters.ContainsKey("appsecret_proof"))
                 parameters.Add("appsecret_proof", this.getAppSecretProof(parameters["access_token"]));
 
             // json_encode all params values that are not strings
@@ -1194,6 +1203,7 @@ namespace facebook
             if (!sig.Equals(expected_sig))
             {
                 //self::errorLog('Bad Signed JSON signature!');
+                FacebookBase.errorLog("Bad Signed JSON signature!");                
                 return null;
             }
 
@@ -1364,10 +1374,16 @@ namespace facebook
         *
         * @param string $msg Log message
         */
-        protected static void errorLog(string msg)
+        protected static void errorLog(string msg, EventLogEntryType errorType = EventLogEntryType.Warning)
         {
             //do something with msg >> write to serverlog?
-            EventLog.WriteEntry("facebook-asp-sdk", msg);
+            /*if (!EventLog.SourceExists("facebook-asp-sdk"))
+                EventLog.CreateEventSource("facebook-asp-sdk", "Application");
+            EventLog.WriteEntry("facebook-asp-sdk", msg, EventLogEntryType.Error);
+            */
+            EventLog log = new EventLog();
+            log.Source = "Application";
+            log.WriteEntry(msg, errorType);
         }
         
         /**

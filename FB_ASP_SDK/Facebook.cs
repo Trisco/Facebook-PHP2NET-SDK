@@ -51,7 +51,7 @@ namespace facebook
                     _kSupportedKeys.Add("state");
                     _kSupportedKeys.Add("code");
                     _kSupportedKeys.Add("access_token");
-                    _kSupportedKeys.Add("user_id");
+                    _kSupportedKeys.Add("user_id");                
                 }
                 return _kSupportedKeys;
             }
@@ -87,12 +87,17 @@ namespace facebook
 
         protected override FacebookBase setPersistentData(String key, String value)
         {
-            if (this.kSupportedKeys.Contains(key)) {
+            if (this.kSupportedKeys.Contains(key))
+            {
                 String session_var_name = constructSessionVariableName(key);
-                if(HttpContext.Current.Session[session_var_name] == null)
+                if (HttpContext.Current.Session[session_var_name] == null)
                     HttpContext.Current.Session.Add(session_var_name, value);
                 else
                     HttpContext.Current.Session[session_var_name] = value;
+            }
+            else
+            {
+                FacebookBase.errorLog("Unsupported key passed to setPersistentData.");                      
             }
             return this;
         }
@@ -102,6 +107,7 @@ namespace facebook
             if (_default == null) _default = string.Empty;
             if (!this.kSupportedKeys.Contains(key))
             {
+                FacebookBase.errorLog("Unsupported key passed to getPersistentData.");       
                 return _default;
             }
 
@@ -111,18 +117,16 @@ namespace facebook
 
         protected override void clearAllPersistentData()
         {
-            String session_var_name = null;
             foreach (String key in this.kSupportedKeys)
             {
-                session_var_name = constructSessionVariableName(key);
-                HttpContext.Current.Session.Remove(key);
+                this.clearPersistentData(key);                
             }
             if (!string.IsNullOrWhiteSpace(this.sharedSessionID)){
                 this.deleteSharedSessionCookie();
             }
             //fix 2013-01-16
-            HttpContext.Current.Session.Clear();
-            HttpContext.Current.Session.Abandon();
+          //  HttpContext.Current.Session.Clear();
+          //  HttpContext.Current.Session.Abandon();
         }
         protected void deleteSharedSessionCookie() {
             string cookie_name = this.getSharedSessionCookieName();
@@ -137,11 +141,15 @@ namespace facebook
         }
         protected override void clearPersistentData(String key)
         {
-            //if (kSupportedKeys.Contains(key))
-            //{           
-            String session_var_name = constructSessionVariableName(key);
-            HttpContext.Current.Session.Remove(session_var_name);
-            //}
+            if (kSupportedKeys.Contains(key))
+            {
+                String session_var_name = constructSessionVariableName(key);
+                HttpContext.Current.Session.Remove(session_var_name);
+            }
+            else
+            {
+                FacebookBase.errorLog("Unsupported key passed to clearPersistentData.");                 
+            }
         }
 
         protected String constructSessionVariableName(String key) {

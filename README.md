@@ -16,6 +16,16 @@ Demo
 
 http://fbasp.hylas.be/
 
+Note: for quick and easy debugging on localhost
+===============================================
+
+1. create a facebook app for local debugging only:
+	- App Domains: localhost
+	- Sandbox Mode: enabled (only admins can use app)
+	- Website with Facebook Login: http://localhost:<VS debugger or IIS express port>/Example/
+2. it works! (after a minute or two...)
+3. but you really should put appId & apiSecret in your web.config, using a web.config transformation to switch between your debug & release application
+
 Usage
 =====
 
