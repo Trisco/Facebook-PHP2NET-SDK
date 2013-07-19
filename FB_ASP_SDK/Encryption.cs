@@ -137,7 +137,8 @@ namespace facebook
             //Encoding.UTF8.GetString(hmacsha256.Hash);
             foreach (byte test in hmacsha256.Hash)
             {
-                resp.Append(test.ToString("X2"));
+                //resp.Append(test.ToString("X2")); //uppercase
+                resp.Append(test.ToString("x2")); //lowercase
             }
             return resp.ToString();
         }

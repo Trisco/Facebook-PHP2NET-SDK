@@ -51,7 +51,7 @@ namespace facebook
                     _kSupportedKeys.Add("state");
                     _kSupportedKeys.Add("code");
                     _kSupportedKeys.Add("access_token");
-                    _kSupportedKeys.Add("user_id");                
+                    _kSupportedKeys.Add("user_id");
                 }
                 return _kSupportedKeys;
             }

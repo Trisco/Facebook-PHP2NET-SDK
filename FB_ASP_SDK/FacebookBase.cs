@@ -709,7 +709,7 @@ namespace facebook
                 else
                 {
                     //self::errorLog('CSRF state token does not match one provided.');
-                    FacebookBase.errorLog("CSRF state token does not match one provided", EventLogEntryType.Warning);  
+                    FacebookBase.errorLog("CSRF state token does not match one provided: " + this.state + " vs " + HttpContext.Current.Request["state"], EventLogEntryType.Warning);  
                     return null;
                 }
             }
@@ -773,7 +773,7 @@ namespace facebook
             if (string.IsNullOrEmpty(this.state))
             {
                 this.state = Encryption.Md5Hash(Guid.NewGuid().ToString());
-                setPersistentData("state", this.state);
+                this.setPersistentData("state", this.state);
                 /* Http.setCookie(getCSRFTokenCookieName(),
                          this.state,
                          DateTime.Now.AddHours(1)); // sticks for an hour*/
